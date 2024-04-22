@@ -46,40 +46,43 @@ def ini_stims(window):
                                  pos=(0, 0), height=height_stim, wrapWidth=None, ori=0.0,
                                  color='white', colorSpace='rgb', opacity=None,
                                  languageStyle='LTR',
-                                 depth=0.0);
+                                 depth=0.0)
 
+    # white target
     answer_white_target = visual.TextStim(win=window, name='Intruction_for_answer',
                                           text='Jaka litera pojawiła się jako litera biała?\nNaciśnij klawisz odpowiadający literze, którą widziałeś/widziałaś.\nUWAGA - klawisz możesz nacisnąć tylko raz, potem nie będzie powrotu!',
                                           font='Open Sans',
                                           pos=(0, 0), height=height_text, wrapWidth=None, ori=0.0,
                                           color='white', colorSpace='rgb', opacity=None,
                                           languageStyle='LTR',
-                                          depth=0.0);
+                                          depth=0.0)
 
+    # first target
     answer_target1 = visual.TextStim(win=window, name='Intruction_for_answer1',
                                      text='Jaka litera pojawiła się OD RAZU PO literze białej?\nNaciśnij klawisz odpowiadający literze, którą widziałeś/widziałaś.\nUWAGA - klawisz możesz nacisnąć tylko raz, nie ma możliwości powrotu!',
                                      font='Open Sans',
                                      pos=(0, 0), height=height_text, wrapWidth=None, ori=0.0,
                                      color='white', colorSpace='rgb', opacity=None,
                                      languageStyle='LTR',
-                                     depth=0.0);
+                                     depth=0.0)
 
+    # second target
     answer_target2 = visual.TextStim(win=window, name='Instruction_for_answer2',
                                      text='Jaka litera pojawiła się jako kolejna? Druga litera po literze białej.\nNaciśnij klawisz odpowiadający literze, którą widziałeś/widziałaś.\nUWAGA - klawisz możesz nacisnąć tylko raz, potem nie będzie powrotu!',
                                      font='Open Sans',
                                      pos=(0, 0), height=height_text, wrapWidth=None, ori=0.0,
                                      color='white', colorSpace='rgb', opacity=None,
                                      languageStyle='LTR',
-                                     depth=0.0);
+                                     depth=0.0)
 
-    # --- Initialize components for Routine "Answer_three" ---
+    # third target
     answer_target3 = visual.TextStim(win=window, name='Instruction_for_answer3',
                                      text='Jaka litera pojawiła się jako kolejna? Trzecia litera po literze białej.\nNaciśnij klawisz odpowiadający literze, którą widziałeś/widziałaś.\nUWAGA - klawisz możesz nacisnąć tylko raz, potem nie będzie powrotu!',
                                      font='Open Sans',
                                      pos=(0, 0), height=height_text, wrapWidth=None, ori=0.0,
                                      color='white', colorSpace='rgb', opacity=None,
                                      languageStyle='LTR',
-                                     depth=0.0);
+                                     depth=0.0)
 
     return fixation, instruction_text, blank_text, answer_white_target, answer_target1, answer_target2, answer_target3
 
