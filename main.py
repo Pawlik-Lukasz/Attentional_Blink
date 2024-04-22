@@ -5,7 +5,7 @@ import random
 import csv
 
 # Define parameters
-num_trials = 2
+num_trials = 2  # CHANGE TO 90 FOR EXPERIMENTAL USAGE
 blink_duration = 0.075  # in milliseconds
 one_lett_duration = 0.015  # duration of displaying one letter
 fixation_duration = 0.018  # duration of displaying fixation point
@@ -94,7 +94,7 @@ def ini_start_end_text(window):
                                       font='Open Sans',
                                       height=height_text)
 
-    # --- Initialize components for Routine "Goodbye_Screen" ---
+    # initialize ending screen after all trials
     goodbye_message = visual.TextStim(win=window, name='goodbye_message',
                                       text='Dziękujemy za udział w badaniu!\nW razie wątpliwości lub pytań zapraszamy do kontaktu mailowego:\nlukasz.pawlik@student.uj.edu.pl\nAby wyjść naciśnij dowolny klawisz',
                                       font='Open Sans',
