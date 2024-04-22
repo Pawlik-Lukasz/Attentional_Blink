@@ -33,12 +33,6 @@ def ini_stims(window):
     # Define fixation point
     fixation = Circle(window, radius=5, color="white")
 
-    # Initialize welcome message screen
-    welcome_message = visual.TextStim(win=window, name='welcome_message',
-                                      text='Dzień dobry. Jesteśmy studentami Kognitywistyki na drugim roku. Bierze Pan/Pani udział w eksperymencie prowadzonym przez nas w ramach zaliczenia przedmiotu. Udział w eksperymencie jest dobrowolny i może zostać przez Panią/Pana przerwany w dowolnym momencie. \n\nNaciśnij klawisz SPACJA aby zacząć',
-                                      font='Open Sans',
-                                      height=height_text)
-
     # instruction before trials
     instruction_text = visual.TextStim(win=window, name='instruction_text',
                                        text='Skup się na literze białej i trzech literach po literze białej, postaraj się je wszystkie zapamiętać. Na końcu zostaniesz poproszony o naciśnięcie po kolei 4 klawiszy z literami, które zaobserwowałeś.\nKiedy będziesz gotowy naciśnij klawisz SPACJA',
@@ -87,6 +81,16 @@ def ini_stims(window):
                                      languageStyle='LTR',
                                      depth=0.0);
 
+    return fixation, instruction_text, blank_text, answer_white_target, answer_target1, answer_target2, answer_target3
+
+
+def ini_start_end_text(window):
+    # Initialize welcome message screen
+    welcome_message = visual.TextStim(win=window, name='welcome_message',
+                                      text='Dzień dobry. Jesteśmy studentami Kognitywistyki na drugim roku. Bierze Pan/Pani udział w eksperymencie prowadzonym przez nas w ramach zaliczenia przedmiotu. Udział w eksperymencie jest dobrowolny i może zostać przez Panią/Pana przerwany w dowolnym momencie. \n\nNaciśnij klawisz SPACJA aby zacząć',
+                                      font='Open Sans',
+                                      height=height_text)
+
     # --- Initialize components for Routine "Goodbye_Screen" ---
     goodbye_message = visual.TextStim(win=window, name='goodbye_message',
                                       text='Dziękujemy za udział w badaniu!\nW razie wątpliwości lub pytań zapraszamy do kontaktu mailowego:\nlukasz.pawlik@student.uj.edu.pl\nAby wyjść naciśnij dowolny klawisz',
@@ -96,20 +100,7 @@ def ini_stims(window):
                                       languageStyle='LTR',
                                       depth=0.0)
 
-    # Store all stimuli in a dictionary
-    stimuli = {
-        'fixation': fixation,
-        'welcome_message': welcome_message,
-        'instruction_text': instruction_text,
-        'blank_text': blank_text,
-        'answer_white_target': answer_white_target,
-        'answer_target1': answer_target1,
-        'answer_target2': answer_target2,
-        'answer_target3': answer_target3,
-        'goodbye_message': goodbye_message
-    }
-
-    return stimuli
+    return welcome_message, goodbye_message
 
 
 def blank(window, blank_text):
@@ -178,7 +169,9 @@ def open_dlg():
     return participant_num
 
 
-def make_trials(window, participant_num, stimuli):
+def make_trials(window, participant_num):
+    fixation, instruction_text, blank_text, answer_white_target, answer_target1, answer_target2, answer_target3, = ini_stims(
+        window=window)
     for n in range(num_trials):
         random.shuffle(letters)  # shuffle letters on each trial
         num_letts = random.randint(7, 15)  # random number of pre-target letters
@@ -208,49 +201,49 @@ def make_trials(window, participant_num, stimuli):
                                        depth=0.0)
 
         # draw instruction on screen
-        stimuli["instruction_text"].draw()
+        instruction_text.draw()
         window.flip()
         quit_on_esc()
 
         # draw fixation point on screen
-        stimuli["fixation"].draw()
+        fixation.draw()
         window.flip()
         core.wait(fixation_duration)
 
         # draw all non-target letters with blank on screen
         for i in range(num_letts):
-            draw_letter(window=window, blank_text=stimuli["blank_text"], text_stim=trial_letters, text_index=i)
+            draw_letter(window=window, blank_text=blank_text, text_stim=trial_letters, text_index=i)
 
         # draw white target letter on screen
         white_target.draw()
         window.flip()
         core.wait(one_lett_duration)
-        blank(window=window, blank_text=stimuli["blank_text"])
+        blank(window=window, blank_text=blank_text)
 
         # draw targets after white letter
         for i in range(index_after_white, index_after_white + num_post_targ):
-            draw_letter(window=window, blank_text=stimuli["blank_text"], text_stim=trial_letters, text_index=i)
+            draw_letter(window=window, blank_text=blank_text, text_stim=trial_letters, text_index=i)
         # draw post-target letters
         start_post_non_targ = index_after_white + num_post_targ + 1
         end_post_non_targ = start_post_non_targ + num_post_non_targ
         for i in range(start_post_non_targ, end_post_non_targ):
-            draw_letter(window=window, blank_text=stimuli["blank_text"], text_stim=trial_letters, text_index=i)
+            draw_letter(window=window, blank_text=blank_text, text_stim=trial_letters, text_index=i)
 
         # ask for white target letter
-        answer_target(window=window, sub_index=participant_num, text_stim=stimuli["answer_white_target"],
+        answer_target(window=window, sub_index=participant_num, text_stim=answer_white_target,
                       target_letts=target_letts, post_letts=post_letts, lett_index=0)
         # ask for first post-target
-        answer_target(window=window, sub_index=participant_num, text_stim=stimuli["answer_target1"],
+        answer_target(window=window, sub_index=participant_num, text_stim=answer_target1,
                       target_letts=target_letts,
                       post_letts=post_letts,
                       lett_index=1)
         # ask for second post-target
-        answer_target(window=window, sub_index=participant_num, text_stim=stimuli["answer_target2"],
+        answer_target(window=window, sub_index=participant_num, text_stim=answer_target2,
                       target_letts=target_letts,
                       post_letts=post_letts,
                       lett_index=2)
         # ask for third post-target
-        answer_target(window=window, sub_index=participant_num, text_stim=stimuli["answer_target3"],
+        answer_target(window=window, sub_index=participant_num, text_stim=answer_target3,
                       target_letts=target_letts,
                       post_letts=post_letts,
                       lett_index=3)
@@ -262,20 +255,20 @@ if __name__ == "__main__":
 
     # initialize window
     win = ini_win()
-    # initialize all stims and texts
-    stims = ini_stims(window=win)
+    # initialize welcome and goodbye message
+    welcome_message, goodbye_message = ini_start_end_text(window=win)
 
     # draw welcome screen with introduction
-    stims["welcome_message"].draw()
+    welcome_message.draw()
     win.flip()
     # check if user wants to exit
     quit_on_esc()
 
     # make all trials, appending "answers" list with correct answers
-    make_trials(window=win, participant_num=part_index, stimuli=stims)
+    make_trials(window=win, participant_num=part_index)
 
     # draw goodbye screen
-    stims["goodbye_message"].draw()
+    goodbye_message.draw()
     win.flip()
     # check if user wants to exit
     quit_on_esc()
