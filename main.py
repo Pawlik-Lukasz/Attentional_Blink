@@ -8,7 +8,7 @@ import csv
 num_trials = 2  # CHANGE TO 90 FOR EXPERIMENTAL USAGE
 blink_duration = 0.075  # in milliseconds
 one_lett_duration = 0.015  # duration of displaying one letter
-fixation_duration = 0.018  # duration of displaying fixation point
+fixation_duration = 0.180  # duration of displaying fixation point
 num_post_targ = 3  # number of target letters after white letter
 num_post_non_targ = 5  # number of letters after all target letters
 num_post = num_post_targ + num_post_non_targ  # number of all post white-letter target
@@ -17,7 +17,7 @@ height_text = 40  # size of text
 letters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "W",
            "X", "Y", "Z"]
 
-user_answers = []  # list of answers ['Subject_index', 'Target_index', 'Is_correct']
+user_answers = []  # list of answers ['Subject_index', 'Target_index', 'Is_correct', 'Is_in_posts', 'Post_index']
 
 # initialization of user keyboard
 keyboard = keyboard.Keyboard()
