@@ -18,6 +18,7 @@ letters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N",
            "X", "Y", "Z"]
 
 user_answers = []  # list of answers ['Subject_index', 'Target_index', 'Is_correct', 'Is_in_posts', 'Post_index']
+INSTRUCTION = 'Runda %d z %d.  Skup się na literze białej i trzech literach po literze białej, postaraj się je wszystkie zapamiętać. Na końcu zostaniesz poproszony o naciśnięcie po kolei 4 klawiszy z literami, które zaobserwowałeś.\nKiedy będziesz gotowy naciśnij klawisz SPACJA'
 
 # initialization of user keyboard
 keyboard = keyboard.Keyboard()
@@ -35,7 +36,7 @@ def ini_stims(window):
 
     # instruction before trials
     instruction_text = visual.TextStim(win=window, name='instruction_text',
-                                       text='Skup się na literze białej i trzech literach po literze białej, postaraj się je wszystkie zapamiętać. Na końcu zostaniesz poproszony o naciśnięcie po kolei 4 klawiszy z literami, które zaobserwowałeś.\nKiedy będziesz gotowy naciśnij klawisz SPACJA',
+                                       text='',
                                        font='Open Sans',
                                        height=height_text)
 
@@ -122,6 +123,7 @@ def draw_letter(window, blank_text, text_stim, text_index):
 
 def quit_on_esc():
     if 'escape' in keyboard.waitKeys():
+        save_to_csv(user_answers)
         core.quit()
 
 
@@ -148,7 +150,7 @@ def answer_target(window, sub_index, text_stim, target_letts, post_letts, lett_i
 
 
 def save_to_csv(correct_answers):
-    with open('answers.csv', 'w', newline='') as csvfile:
+    with open(filename, 'w', newline='') as csvfile:
         # If Target_index = 0 then it is white letter target
         fieldnames = ['Subject_index', 'Target_index', 'Is_correct', 'Is_in_posts', 'Post_index']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
@@ -204,6 +206,7 @@ def make_trials(window, participant_num):
                                        depth=0.0)
 
         # draw instruction on screen
+        instruction_text.setText(INSTRUCTION % (n+1, num_trials))
         instruction_text.draw()
         window.flip()
         quit_on_esc()
@@ -255,6 +258,8 @@ def make_trials(window, participant_num):
 if __name__ == "__main__":
     # make dialog for input participant number
     part_index = open_dlg()
+    suffix=part_index.translate(str.maketrans('<>:"/|?*\\', "---------"))
+    filename = f'answers_{suffix}.csv'
 
     # initialize window
     win = ini_win()
